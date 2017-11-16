@@ -20,7 +20,7 @@ draw_attachments(ship_space *ship, frame_data *frame)
     auto &attach_mesh = asset_man.get_mesh("attach.dae");
 
     glUseProgram(lit_instanced_shader);
-    glUniform1i(glGetUniformLocation(lit_instanced_shader, "mat"), asset_man.get_texture_index("wire.png"));
+    glUniform1i(glGetUniformLocation(lit_instanced_shader, "mat"), asset_man.get_world_texture_index("wire.png"));
 
     for (auto type = 0u; type < num_wire_types; ++type) {
         auto const & wire_attachments = ship->wire_attachments[type];
@@ -58,7 +58,7 @@ draw_attachments_on_active_wire(ship_space *ship, frame_data *frame)
     auto &attach_mesh = asset_man.get_mesh("attach.dae");
 
     glUseProgram(unlit_instanced_shader);
-    glUniform1i(glGetUniformLocation(unlit_instanced_shader, "mat"), asset_man.get_texture_index("no_place.png"));
+    glUniform1i(glGetUniformLocation(unlit_instanced_shader, "mat"), asset_man.get_world_texture_index("no_place.png"));
 
     for (auto type = 0u; type < num_wire_types; ++type) {
         auto const & wire_attachments = ship->wire_attachments[type];
@@ -117,7 +117,7 @@ draw_segments(ship_space *ship, frame_data *frame) {
     auto &wire_mesh = asset_man.get_mesh("wire.dae");
 
     glUseProgram(lit_instanced_shader);
-    glUniform1i(glGetUniformLocation(lit_instanced_shader, "mat"), asset_man.get_texture_index("no_place.png"));
+    glUniform1i(glGetUniformLocation(lit_instanced_shader, "mat"), asset_man.get_world_texture_index("no_place.png"));
 
     for (auto type = 0u; type < num_wire_types; ++type) {
         auto const & wire_attachments = ship->wire_attachments[type];
@@ -160,7 +160,7 @@ draw_active_segments(ship_space *ship, frame_data *frame) {
     auto &wire_mesh = asset_man.get_mesh("wire.dae");
 
     glUseProgram(unlit_instanced_shader);
-    glUniform1i(glGetUniformLocation(unlit_instanced_shader, "mat"), asset_man.get_texture_index("wire.png"));
+    glUniform1i(glGetUniformLocation(unlit_instanced_shader, "mat"), asset_man.get_world_texture_index("wire.png"));
 
     for (auto type = 0u; type < num_wire_types; ++type) {
         auto const & wire_attachments = ship->wire_attachments[type];
