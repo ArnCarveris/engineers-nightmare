@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -13,7 +13,7 @@
 #define DEG2RAD(x) (x * PI / 180.f)
 #define RAD2DEG(x) (x * 180.f / PI)
 
-#define RENDER_DIM 1024
+#define RENDER_DIM 512
 #define WORLD_TEXTURE_DIMENSION     32
 #define MAX_WORLD_TEXTURES          64
 

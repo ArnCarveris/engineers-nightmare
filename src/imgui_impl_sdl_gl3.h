@@ -1,4 +1,4 @@
-// ImGui SDL2 binding with OpenGL3
+﻿// ImGui SDL2 binding with OpenGL3
 // In this binding, ImTextureID is used to store an OpenGL 'GLuint' texture identifier. Read the FAQ about ImTextureID in imgui.cpp.
 // (SDL is a cross-platform general purpose library for handling windows, inputs, OpenGL/Vulkan graphics context creation, etc.)
 // (GL3W is a helper library to access OpenGL functions since there is no standard header to access modern OpenGL functions easily. Alternatives are GLEW, Glad, etc.)
@@ -19,3 +19,5 @@ IMGUI_API bool        ImGui_ImplSdlGL3_ProcessEvent(SDL_Event* event);
 // Use if you want to reset your rendering device without losing ImGui state.
 IMGUI_API void        ImGui_ImplSdlGL3_InvalidateDeviceObjects();
 IMGUI_API bool        ImGui_ImplSdlGL3_CreateDeviceObjects();
+
+IMGUI_API void ImGui_ImplSdlGL3_NewOffscreenFrame(int width, int height);

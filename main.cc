@@ -1,4 +1,4 @@
-#include "src/tinydir.h"
+﻿#include "src/tinydir.h"
 
 #ifndef _WIN32
 #include <err.h> /* errx */
@@ -2326,7 +2326,7 @@ run()
         }
 
         ImGui::SetCurrentContext(imgui_contexts[1]);
-        ImGui_ImplSdlGL3_NewFrame(wnd.ptr);
+        ImGui_ImplSdlGL3_NewOffscreenFrame(RENDER_DIM, RENDER_DIM);
 
         auto flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize |
             ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar |
@@ -2355,7 +2355,7 @@ run()
         }
 
         ImGui::SetCurrentContext(imgui_contexts[2]);
-        ImGui_ImplSdlGL3_NewFrame(wnd.ptr);
+        ImGui_ImplSdlGL3_NewOffscreenFrame(RENDER_DIM, RENDER_DIM);
         ImGui::SetNextWindowPos(ImVec2{ RENDER_DIM / 2, RENDER_DIM / 4 }, 0, ImVec2{ 0.5f, 0.5f });
         {
             ImGui::Begin("Second Window", false, { 0, 0 }, 1.0f, flags);
