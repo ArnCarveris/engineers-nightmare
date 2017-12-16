@@ -332,5 +332,11 @@ assets = (
         "textures/sky_front5.png",
         "textures/sky_back6.png"
     ]
+},
+{
+	name = "test"
+	type = "sound"
+	streaming = true
+	file = "sounds/music/nightmare.ogg"
 }
 );

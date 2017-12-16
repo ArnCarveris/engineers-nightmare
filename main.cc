@@ -75,6 +75,8 @@ struct {
 
 frame_info frame_info;
 
+SoLoud::Soloud * audio;
+
 struct per_camera_params {
     glm::mat4 view_proj_matrix;
     glm::mat4 inv_centered_view_proj_matrix;
@@ -293,6 +295,10 @@ init()
 
     // Absorb all the init time so we dont try to catch up
     frame_info.tick();
+
+    audio = new SoLoud::Soloud();
+    audio->init(SoLoud::Soloud::CLIP_ROUNDOFF, SoLoud::Soloud::WINMM);
+    audio->play(*asset_man.get_sound("test"));
 }
 
 
@@ -1264,6 +1270,9 @@ main(int, char **)
     run();
 
     ImGui_ImplSdlGL3_Shutdown();
+
+    audio->deinit();
+    delete audio;
 
     return 0;
 }
