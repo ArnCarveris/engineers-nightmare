@@ -138,9 +138,65 @@ set(IMGUI_SOURCES
     src/imgui/stb_rect_pack.h
     src/imgui/stb_textedit.h
     src/imgui/stb_truetype.h
+) 	
+
+option(ALSA "Enable ALSA audio backend" ON)
+option(OSS "Enable OSS audio backend" OFF)
+option(COREAUDIO "Enable Core Audio audio backend" OFF)
+option(NULL "Enable NULL audio backend" ON)
+
+if(ALSA)
+	add_definitions(-DWITH_ALSA)
+endif(ALSA)
+
+if(OSS)
+	add_definitions(-DWITH_OSS)
+endif(OSS)
+
+if(COREAUDIO)
+	add_definitions(-DWITH_COREAUDIO)
+endif(COREAUDIO)
+
+if(NULL)
+	add_definitions(-DWITH_NULL)
+endif(NULL)
+
+set(SOLOUD_SOURCES
+	src/soloud/src/audiosource/wav/soloud_wav.cpp
+	src/soloud/src/audiosource/wav/soloud_wavstream.cpp
+	src/soloud/src/audiosource/wav/stb_vorbis.c
+	src/soloud/src/audiosource/wav/stb_vorbis.h
+	src/soloud/src/backend/null/soloud_null.cpp
+	src/soloud/src/backend/alsa/soloud_alsa.cpp
+	src/soloud/src/backend/oss/soloud_oss.cpp
+	src/soloud/src/backend/coreaudio/soloud_coreaudio.cpp
+	src/soloud/src/core/soloud.cpp
+	src/soloud/src/core/soloud_audiosource.cpp
+	src/soloud/src/core/soloud_bus.cpp
+	src/soloud/src/core/soloud_core_3d.cpp
+	src/soloud/src/core/soloud_core_basicops.cpp
+	src/soloud/src/core/soloud_core_faderops.cpp
+	src/soloud/src/core/soloud_core_filterops.cpp
+	src/soloud/src/core/soloud_core_getters.cpp
+	src/soloud/src/core/soloud_core_setters.cpp
+	src/soloud/src/core/soloud_core_voicegroup.cpp
+	src/soloud/src/core/soloud_core_voiceops.cpp
+	src/soloud/src/core/soloud_fader.cpp
+	src/soloud/src/core/soloud_fft.cpp
+	src/soloud/src/core/soloud_fft_lut.cpp
+	src/soloud/src/core/soloud_file.cpp
+	src/soloud/src/core/soloud_filter.cpp
+	src/soloud/src/core/soloud_thread.cpp
+	src/soloud/src/filter/soloud_bassboostfilter.cpp
+	src/soloud/src/filter/soloud_biquadresonantfilter.cpp
+	src/soloud/src/filter/soloud_dcremovalfilter.cpp
+	src/soloud/src/filter/soloud_echofilter.cpp
+	src/soloud/src/filter/soloud_fftfilter.cpp
+	src/soloud/src/filter/soloud_flangerfilter.cpp
+	src/soloud/src/filter/soloud_lofifilter.cpp
 )
 
-add_library(NIGHTMARE ${EN_SOURCES} ${EN_HEADERS} ${IMGUI_SOURCES})
+add_library(NIGHTMARE ${EN_SOURCES} ${EN_HEADERS} ${IMGUI_SOURCES} ${SOLOUD_SOURCES})
 
 include(FindPkgConfig)
 PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
@@ -151,10 +207,17 @@ PKG_SEARCH_MODULE(FREETYPE REQUIRED freetype2)
 
 find_package(Bullet REQUIRED)
 
+set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+find_package(Threads REQUIRED)
+
+include(FindALSA)
+
 find_path(LIBCONFIG_INCLUDE_DIRS libconfig.h)
 find_library(LIBCONFIG_LIBRARIES config)
 
 include_directories(
+	${ALSA_INCLUDE_DIRS}
     ${SDL2_INCLUDE_DIRS}
     ${EPOXY_INCLUDE_DIRS}
     ${ASSIMP_INCLUDE_DIRS}
@@ -163,9 +226,11 @@ include_directories(
     ${FREETYPE_INCLUDE_DIRS}
     ${LIBCONFIG_INCLUDE_DIRS}
     src/glm
+	src/soloud/include
 )
 
 target_link_libraries(nightmare
+  ${ALSA_LIBRARY}
   ${SDL2_LIBRARIES}
   ${EPOXY_LIBRARIES}
   ${ASSIMP_LIBRARIES}
@@ -173,6 +238,7 @@ target_link_libraries(nightmare
   ${BULLET_LIBRARIES}
   ${FREETYPE_LIBRARIES}
   ${LIBCONFIG_LIBRARIES}
+  Threads::Threads
   NIGHTMARE
 )
 
