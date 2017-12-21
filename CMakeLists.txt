@@ -143,7 +143,7 @@ set(IMGUI_SOURCES
 option(ALSA "Enable ALSA audio backend" ON)
 option(OSS "Enable OSS audio backend" OFF)
 option(COREAUDIO "Enable Core Audio audio backend" OFF)
-option(NULL "Enable NULL audio backend" ON)
+option(NULL "Enable NULL audio backend" OFF)
 
 if(ALSA)
 	add_definitions(-DWITH_ALSA)
@@ -230,6 +230,7 @@ include_directories(
 )
 
 target_link_libraries(nightmare
+  NIGHTMARE
   ${ALSA_LIBRARY}
   ${SDL2_LIBRARIES}
   ${EPOXY_LIBRARIES}
@@ -239,7 +240,6 @@ target_link_libraries(nightmare
   ${FREETYPE_LIBRARIES}
   ${LIBCONFIG_LIBRARIES}
   Threads::Threads
-  NIGHTMARE
 )
 
 # the following is based on

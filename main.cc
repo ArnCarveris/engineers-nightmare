@@ -298,7 +298,7 @@ init()
     frame_info.tick();
 
     audio = new SoLoud::Soloud();
-    audio->init(SoLoud::Soloud::CLIP_ROUNDOFF, SoLoud::Soloud::WINMM);
+    audio->init();
     audio->play(*asset_man.get_sound("test"));
 }
 
