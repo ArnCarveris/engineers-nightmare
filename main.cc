@@ -300,6 +300,7 @@ init()
     audio = new SoLoud::Soloud();
     audio->init();
     audio->play(*asset_man.get_sound("test"));
+    audio->setGlobalVolume(game_settings.audio.global_volume);
 }
 
 
@@ -965,6 +966,8 @@ struct menu_state : game_state {
         Keybinds,
     } state{MenuState::Main};
 
+    bool settings_dirty = false;
+
     unsigned menu_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize;
 
     menu_state() {
@@ -1019,14 +1022,17 @@ struct menu_state : game_state {
     void handle_settings_menu() {
         ImGui::Begin("", nullptr, menu_flags);
         {
-            bool dirty = false;
-
             ImGui::Text("Settings");
             ImGui::Separator();
 
             bool invert = game_settings.input.mouse_invert == -1.0f;
-            dirty |= ImGui::Checkbox("Invert Mouse", &invert);
+            settings_dirty |= ImGui::Checkbox("Invert Mouse", &invert);
             game_settings.input.mouse_invert = invert ? -1.0f : 1.0f;
+
+            float vol = audio->getGlobalVolume();
+            settings_dirty |= ImGui::SliderFloat("Volume", &vol, 0.0f, 1.0f);
+            game_settings.audio.global_volume = vol;
+            audio->setGlobalVolume(vol);
 
             ImGui::Separator();
             ImGui::Checkbox("Draw FPS", &draw_fps);
@@ -1045,10 +1051,6 @@ struct menu_state : game_state {
             if (ImGui::Button("Back")) {
                 state = MenuState::Main;
             }
-
-            if (dirty) {
-                save_settings(game_settings);
-            }
         }
         ImGui::End();
     }
@@ -1062,6 +1064,11 @@ struct menu_state : game_state {
         {
             switch (state) {
                 case MenuState::Main: {
+                    if (settings_dirty) {
+                        save_settings(game_settings);
+                    }
+                    settings_dirty = false;
+
                     handle_main_menu();
                     break;
                 }
