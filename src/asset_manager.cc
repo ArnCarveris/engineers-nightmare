@@ -6,7 +6,7 @@
 
 asset_manager::asset_manager()
     : meshes(),
-      surf_to_mesh() {
+      surf_to_mesh(), surf_type_to_mesh(), paint_surf_to_mesh() {
 
     surf_to_mesh[surface_xm][surface_wall] = "x_quad";
     surf_to_mesh[surface_xp][surface_wall] = "x_quad_p";
@@ -28,6 +28,11 @@ asset_manager::asset_manager()
     surf_to_mesh[surface_yp][surface_glass] = "glass_y_quad_p";
     surf_to_mesh[surface_zm][surface_glass] = "glass_z_quad";
     surf_to_mesh[surface_zp][surface_glass] = "glass_z_quad_p";
+
+    paint_surf_to_mesh[surface_xm][surface_wall] = "paint_x_quad";
+    paint_surf_to_mesh[surface_xp][surface_wall] = "paint_x_quad_p";
+    paint_surf_to_mesh[surface_ym][surface_wall] = "paint_y_quad";
+    paint_surf_to_mesh[surface_yp][surface_wall] = "paint_y_quad_p";
 
     surf_type_to_mesh[surface_wall] = "surface_wall";
     surf_type_to_mesh[surface_grate] = "surface_grate";

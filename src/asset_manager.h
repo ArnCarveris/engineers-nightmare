@@ -20,6 +20,7 @@ class asset_manager
     void load_asset_manifest(char const *filename);
 
 public:
+    std::array<std::array<std::string, face_count>, 256> paint_surf_to_mesh;
     asset_manager();
     ~asset_manager() = default;
 

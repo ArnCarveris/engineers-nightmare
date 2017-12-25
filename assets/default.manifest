@@ -171,6 +171,34 @@ assets = (
     offset = [0.5,0.5,0.0]
 },
 {
+    name = "paint_x_quad"
+    type = "mesh"
+    file = "mesh/paint_xm.obj"
+    scale = 0.0625
+    offset = [0.5,0.5,0.0]
+},
+{
+    name = "paint_x_quad_p"
+    type = "mesh"
+    file = "mesh/paint_xp.obj"
+    scale = 0.0625
+    offset = [0.5,0.5,0.0]
+},
+{
+    name = "paint_y_quad"
+    type = "mesh"
+    file = "mesh/paint_ym.obj"
+    scale = 0.0625
+    offset = [0.5,0.5,0.0]
+},
+{
+    name = "paint_y_quad_p"
+    type = "mesh"
+    file = "mesh/paint_yp.obj"
+    scale = 0.0625
+    offset = [0.5,0.5,0.0]
+},
+{
     name = "frobnicator"
     type = "mesh"
     file = "mesh/frobnicator.dae"

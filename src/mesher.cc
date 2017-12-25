@@ -182,7 +182,14 @@ chunk::prepare_render()
                     // Only frame side of surface gets generated
                     for (unsigned surf = 0; surf < 6; surf++) {
                         if (b->surfs[surf] != surface_none) {
-                            auto mesh = &asset_man.get_surface_mesh(surf, b->surfs[surf]);
+                            const mesh_data *mesh;
+                            if (k % 4 == 0 && b->surfs[surf] == surface_wall && surf != surface_zm && surf != surface_zp) {
+                                mesh = &asset_man.get_mesh(asset_man.paint_surf_to_mesh[surf][b->surfs[surf]]);
+                                printf("%d\n", k);
+                            }
+                            else {
+                                mesh = &asset_man.get_surface_mesh(surf, b->surfs[surf]);
+                            }
                             stamp_at_offset(&verts, &indices, mesh->sw, glm::vec3(i, j, k));
                         }
                     }
